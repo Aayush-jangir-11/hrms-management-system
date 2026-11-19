@@ -4,6 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const seedDb = require("./seed")
 
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -73,7 +74,7 @@ const PORT = process.env.PORT || 3001;
 const startServer = async () => {
   try {
     await connectDB();
-
+    await seedDb()
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
