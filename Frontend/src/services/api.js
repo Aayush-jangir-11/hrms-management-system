@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3001/api",
+  baseURL: import.meta.env.BASE_URL || "http://localhost:3001/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -16,7 +16,7 @@ API.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // Response interceptor to handle token expiry and global errors
@@ -30,10 +30,18 @@ API.interceptors.response.use(
       localStorage.removeItem("hrms_user");
 
       // Redirect to login page only if user was logged in and not already on auth/public pages
-      const publicPaths = ["/login", "/forgot-password", "/reset-password", "/"];
+      const publicPaths = [
+        "/login",
+        "/forgot-password",
+        "/reset-password",
+        "/",
+      ];
       const currentPath = window.location.pathname;
 
-      if (hadToken && !publicPaths.some((p) => currentPath.startsWith(p) && p !== "/")) {
+      if (
+        hadToken &&
+        !publicPaths.some((p) => currentPath.startsWith(p) && p !== "/")
+      ) {
         window.location.href = "/login?expired=true";
       }
     }
@@ -54,13 +62,13 @@ API.interceptors.response.use(
               method: error.config?.method?.toUpperCase(),
               data: error.response?.data,
             },
-          })
+          }),
         );
       }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default API;
