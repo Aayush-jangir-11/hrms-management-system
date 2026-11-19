@@ -4,7 +4,6 @@ const cors = require("cors");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const seedDatabase = require("./seed");
 
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
