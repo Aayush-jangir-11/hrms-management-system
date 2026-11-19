@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
+  envPrefix: ["VITE_", "BACKEND_"],
   plugins: [react(), tailwindcss()],
   oxc: {
     drop: mode === "production" ? ["console", "debugger"] : [],

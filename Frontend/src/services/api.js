@@ -1,7 +1,14 @@
 import axios from "axios";
 
+const rawBackendUrl =
+  import.meta.env.BACKEND_URL ||
+  "http://localhost:3001/api";
+const baseURL = rawBackendUrl.endsWith("/api")
+  ? rawBackendUrl
+  : `${rawBackendUrl.replace(/\/+$/, "")}/api`;
+
 const API = axios.create({
-  baseURL: import.meta.env.BASE_URL || "http://localhost:3001/api",
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },

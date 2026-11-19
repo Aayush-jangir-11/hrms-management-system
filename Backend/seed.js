@@ -8,7 +8,9 @@ dotenv.config();
 
 const seedDatabase = async () => {
   try {
-    await connectDB();
+    if (mongoose.connection.readyState === 0) {
+      await connectDB();
+    }
 
     console.log("[SEEDER] Checking Admin employee in MongoDB...");
 
@@ -34,7 +36,7 @@ const seedDatabase = async () => {
       console.log("ℹ[SEEDER] Admin Employee already exists in MongoDB:", adminEmail);
     }
 
-    console.log("SEEDER] Admin database seeding completed successfully!");
+    console.log("[SEEDER] Admin database seeding completed successfully!");
   } catch (error) {
     console.error("[SEEDER ERROR]:", error);
   }
