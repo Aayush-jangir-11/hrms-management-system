@@ -42,6 +42,14 @@ app.use(
 app.use(express.json({ limit: "15mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "15mb" }));
 
+// Health Check Route
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "HRMS Backend API is running successfully 🚀",
+  });
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
